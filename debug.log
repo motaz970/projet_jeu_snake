@@ -1,0 +1,2 @@
+[0103/190147.412:ERROR:directory_reader_win.cc(43)] FindFirstFile: Le chemin d’accès spécifié est introuvable. (0x3)
+[0103/190147.439:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\MONCEF\AppData\Local\AVG\Browser\User Data\Crashpad\attachments\7fd51d2d-6cda-4aba-b97a-a0bf7b797e83: Le chemin d’accès spécifié est introuvable. (0x3)

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>jquery-snake-game by pstrinkle</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" media="screen">
+
+    <!-- above the fold, it is render-blocking deliberately. -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+    <!-- optional -->
+    <script src="assets/js.cookie-2.1.2.min.js"></script>
+    <script src="assets/jquery-levelup/1.0.2/jquery.levelup.min.js"></script>
+    <!-- required -->
+    <script src="assets/jquery-paintbox/0.1.0/jquery.paintbox.min.js"></script>
+    <script src="src/snake-game.js"></script>
+
+    <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+  </head>
+  <body>
+  
+ 
+
+      <p>your high score: <span id='high'></span> </p>
+      <span id='points'>0</span> points - <span id='over'></span><br />
+      <button id='start'>Start game</button>
+      <div id='container' style='background-color:black;border:5px solid black;display:table-cell;'></div>
+<script>
+$(function() {
+    var score = Cookies.get('high');
+    if (score == undefined) {
+        $('#high').text(0);
+        score = 0;
+    } else {
+        $('#high').text(score);
+    }
+
+    var $p = $('#points');
+    $p.levelup({'start' : 0});
+
+    $('#container').snakeGame({rows: 40,
+                               cols: 40,
+                               onPoint: function(increase) {
+                                   $p.levelup('increment', increase);
+                               },
+                               onGameOver: function() {
+                                   $('#over').text('Game over!');
+                                   var endScore = $p.levelup('get');
+                                   if (endScore > score) {
+                                       $('#high').text(endScore);
+                                       Cookies.set('high', endScore, {expires:365});
+                                       score = endScore;
+                                   }
+                               }});
+    $('#start').on('click', function(event) {
+        event.preventDefault();
+        $('#log').empty();
+
+        $p.levelup('reset');
+        $('#over').text('');
+
+        $('#container').snakeGame('start');
+    });
+});
+</script>
+
+
+  
+  </body>
+</html>
